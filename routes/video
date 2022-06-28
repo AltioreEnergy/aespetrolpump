@@ -1,0 +1,19 @@
+const express = require("express");
+const router = express.Router();
+
+const {
+  addvideo,
+
+  viewonevideo,
+  allvideo,
+  deletevideo,
+} = require("../controllers/video");
+
+//Paths
+router.post("/admin/addvideo", addvideo);
+
+router.get("/admin/viewonevideo/:id", viewonevideo);
+router.get("/admin/allvideo", allvideo);
+router.get("/admin/deletevideo/:id", deletevideo);
+
+module.exports = router;
