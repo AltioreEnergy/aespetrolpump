@@ -296,3 +296,34 @@ exports.totaldsm = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+
+
+exports.dsmlogin = async (req, res) => {
+  const { mobile, password } = req.body;
+  const dsm = await DSNaddfrom.findOne({
+    $and: [{ mobile: mobile }, { password: password }],
+  });
+  if (dsm) {
+    const validPass = password == dsm.password;
+    if (validPass == true) {
+      res.status(200).send({
+        status: true,
+        msg: "success",
+        dsm: dsm,
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        msg: "Incorrect Password",
+        error: "error",
+      });
+    }
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "Dsm Doesn't Exist",
+      error: "error",
+    });
+  }
+};

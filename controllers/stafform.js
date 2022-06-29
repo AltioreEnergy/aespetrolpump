@@ -297,3 +297,33 @@ exports.totaloutherstaff = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 //console.log()
+
+
+exports.stafflogin = async (req, res) => {
+  const { mobile, password } = req.body;
+  const staff = await staffrom.findOne({
+    $and: [{ mobile: mobile }, { password: password }],
+  });
+  if (staff) {
+    const validPass = password == staff.password;
+    if (validPass == true) {
+      res.status(200).send({
+        status: true,
+        msg: "success",
+        staff: staff,
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        msg: "Incorrect Password",
+        error: "error",
+      });
+    }
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "Staff Doesn't Exist",
+      error: "error",
+    });
+  }
+};
