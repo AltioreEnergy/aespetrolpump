@@ -296,8 +296,7 @@ exports.totaloutherstaff = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
-//console.log()
-
+ 
 
 exports.stafflogin = async (req, res) => {
   const { mobile, password } = req.body;
